@@ -6,19 +6,48 @@
     "onStart": true,
     "sync": false,
     "data": "info = 
-{\r\n    
+{
 name: \"Показания счетчика воды от количества импульсов\",
-\r\n    
 description: \"Увеличивает исходные показания счетчика воды на момент спаривания счетчика импульсов на количество импульсов\",
-\r\n    
-version: \"0.3\",
-\r\n    
-author: \"@bigmanekb\",\r\n\r\n    
-sourceServices: [HS.C_WaterMeter],\r\n    
+version: \"0.3\",  
+author: \"@bigmanekb\",  
+sourceServices: [HS.C_WaterMeter],  
 sourceCharacteristics: 
-[HC.C_CubicMeter],\r\n\r\n\r\n    
-options: {\r\n        
-	StartValue: {\r\n            name: {\r\n                en: \"Start value (liters)\",\r\n                ru: \"Начальные показания в литрах\"\r\n            },\r\n            type: \"Integer\",\r\n            value: 0\r\n        },\r\n        Multi: {\r\n            name: {\r\n                en: \"Multiplier (L/Imp)\",\r\n                ru: \"Множитель литров на импульс\"\r\n            },\r\n            type: \"Double\",\r\n            value: 10\r\n        }\r\n    },\r\n\r\n    variables: {\r\n        end: 0\r\n    }\r\n}\r\n\r\nfunction compute(source, value, variables, options) {\r\n    if ((options.Multi != null) && (options.StartValue != null)) {\r\n        if (value) {\r\n            variables.end = (options.StartValue + (value * options.Multi))/1000;\r\n            return variables.end;\r\n        }\r\n    }\r\n    else {\r\n        return source.getValue()\r\n    }\r\n}",
+	[HC.C_CubicMeter],
+		options: {      
+			StartValue: {
+				name: {
+					en: \"Start value (liters)\",      
+					ru: \"Начальные показания в литрах\"          },
+				type: \"Integer\",        
+				value: 0
+					},     
+			Multi: {
+				name: {
+					en: \"Multiplier (L/Imp)\",
+					ru: \"Множитель литров на импульс\"
+					},         
+				type: \"Double\",
+				value: 10
+				}
+			},
+		variables: 
+			{
+				end: 0
+			}
+function compute(source, value, variables, options) {
+	if ((options.Multi != null) && (options.StartValue != null)) 
+		{
+			if (value) 
+				{
+					variables.end = (options.StartValue + (value * options.Multi))/1000;
+					return variables.end;
+				}
+			else 
+				{
+					return source.getValue()    
+				}
+		}",
     "type": "LOGIC"
   }
 }
